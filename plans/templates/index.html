@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<style>
+    /* Center the images horizontally and vertically */
+    #dynamic-images-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh;
+        /* Adjust as needed */
+    }
+
+    /* Add spacing between images */
+    .img-fluid {
+        margin: -1px;
+        width: 5%;
+        /* Set the width to 50% of the container size */
+    }
+</style>
+
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4">Jara, congrats!</h1>
+        <p class="lead">You've achieved something amazing. You have been born {{age_years}} years, {{age_months}} months
+            and {{age_days}} days ago.</p>
+        <p>Celebrate your success!</p>
+        <p>Push me, and then just touch me till I can get my CE-LE-BRA-TION. CELEBRATION. CELEBRATION.</p>
+        <a class="btn btn-primary" href="{% url 'plans' %}">Celebrate!</a>
+        <p></p>
+        
+        <div class="container mt-4">
+            <!-- Container for dynamic images -->
+            <div id="dynamic-images-container">
+                {% for _ in "x"|ljust:10 %}
+                <img src="{% static 'congapartyparrot.gif' %}" class="img-fluid" alt="Dynamic GIF">
+                {% endfor %}
+            </div>
+        </div>
+        <img src="{% static 'jar_kiss.png' %}" class="card-img-top-fluid" style="max-width: 40%;" alt="Default Image">
+    </div>
+</div>
+{%else%}
+<style>
+    /* Add spacing between images */
+    .img-fluid {
+        margin: -1px;
+        width: 5%; /* Set the width to 5% of the container size */
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Container for the first set of images -->
+    <div class="text-center">
+        {% for _ in "x"|ljust:10 %}
+            <img src="{% static 'congapartyparrot.gif' %}" class="img-fluid" alt="Dynamic GIF">
+        {% endfor %}
+    </div>
+    <br>
+    <!-- Text section with login button on a new line -->
+    <div class="text-center">
+        Login please, pretty please.
+        <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+    </div>
+<br>
+    <!-- Container for the second set of images on a new line -->
+    <div class="text-center">
+        {% for _ in "x"|ljust:10 %}
+            <img src="{% static 'congapartyparrot.gif' %}" class="img-fluid" alt="Dynamic GIF">
+        {% endfor %}
+    </div>
+</div>
+
+{%endif%}
+{% endblock %}

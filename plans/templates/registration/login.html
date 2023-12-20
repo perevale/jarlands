@@ -1,0 +1,26 @@
+<!-- Inside your login.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            
+            <!-- Add Bootstrap styling classes to the form and button -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username:</label>
+                {{ form.username }}
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password:</label>
+                {{ form.password }}
+            </div>
+            
+            <!-- Add Bootstrap styling classes to the submit button -->
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+{% endblock %}

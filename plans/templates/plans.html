@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Card for adding a new plan -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card border-primary shadow">
+            <div class="card-body">
+                <h5 class="card-title">Add a New Plan</h5>
+                <p class="card-text">For adding a new plan, click the button below:</p>
+                <a href="{% url 'add_plan' %}" class="btn btn-success">Add New Plan</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-primary shadow">
+            <div class="card-body">
+                <h5 class="card-title">Filter</h5>
+                <form id="completionFilterForm" method="get" action="{% url 'plans' %}">
+                    <label for="id_completed">Hide completed plans</label>
+                    <input type="checkbox" id="id_completed" name="completed" {% if completed_filter %}checked{% endif %} onchange="document.getElementById('completionFilterForm').submit()">
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+    /* Center the images horizontally and vertically */
+    #dynamic-images-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh;
+        /* Adjust as needed */
+    }
+
+    /* Add spacing between images */
+    .img-fluid {
+        margin: -1px;
+        width: 5%;
+        /* Set the width to 50% of the container size */
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- Container for dynamic images -->
+    <div id="dynamic-images-container">
+        {% for _ in "x"|ljust:10 %}
+        <img src="{% static 'congapartyparrot.gif' %}" class="img-fluid" alt="Dynamic GIF">
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row">
+    {% for plan in plans %}
+    <div class="col-md-4 mb-4">
+        <div class="card border-primary shadow">
+            {% if plan.image %}
+            <img src="{{ plan.image.url }}" class="card-img-top-fluid" alt="Plan Image">
+            {% else %}
+            <!-- Use the default image if no plan image is available -->
+            <img src="{% static 'jarlo.jpeg' %}" class="card-img-top-fluid" alt="Default Image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ plan.title }}</h5>
+                <ul class="list-unstyled">
+                    <li>Total Score: {{ plan.total_score }}</li>
+                </ul>
+                <a href="{% url 'plan_detail' plan.id %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

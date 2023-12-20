@@ -1,0 +1,79 @@
+<!-- Inside your_app/templates/your_app/plan_detail.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4">{{ plan.title }}</h1>
+        <p class="lead">Details of the plan:</p>
+
+        <!-- Display the image if available, otherwise use a default image -->
+        {% if plan.image %}
+        <img src="{{ plan.image.url }}" class="img-fluid" alt="{{ plan.title }}">
+        {% else %}
+        <img src="{% static 'jarlo.jpeg' %}" class="img-fluid" alt="Default Image">
+        {% endif %}
+
+        <!-- Display plan details in a table -->
+        <div class="table-responsive mt-3">
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <th scope="row">Completed</th>
+                        <td>
+                            <form id="completionForm" method="post" action="{% url 'toggle_completion' plan.id %}">
+                                {% csrf_token %}
+                                <input type="checkbox" id="id_completed" name="completed" {% if plan.completed %}checked{% endif %} onchange="document.getElementById('completionForm').submit()">
+                                <label for="id_completed">Completed</label>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>{{ plan.description }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Difficulty</th>
+                        <td>{{ plan.difficulty }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Comfortability</th>
+                        <td>{{ plan.comfortability }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Travel Time (h)</th>
+                        <td>{{ plan.travel_time }} hours</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price ($-$$$$$)</th>
+                        <td>{{ plan.price }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Activities</th>
+                        <td>{{ plan.activities }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Length</th>
+                        <td>{{ plan.length }} days</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Restrictions</th>
+                        <td>{{ plan.restrictions }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Type</th>
+                        <td>{{ plan.plan_type }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total Score</th>
+                        <td>{{ plan.total_score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
